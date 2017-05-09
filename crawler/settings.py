@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import os
 
 # Scrapy settings for crawler project
 #
@@ -64,10 +65,14 @@ ROBOTSTXT_OBEY = False
 
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'crawler.pipelines.CrawlerPipeline': 300,
-#}
-
+ITEM_PIPELINES = {
+   'crawler.pipelines.CrawlerPipeline': 300,
+    'scrapy.pipelines.images.ImagesPipeline':1
+}
+IMAGES_URLS_FIELD = "front_image_url"  #从item中去图片的url交给ImagesPipeline()函数处理下载图片
+project_dir = os.path.abspath(os.path.dirname(__file__))#取本地的存放路径
+IMAGES_STORE = os.path.join(project_dir,'images')#设计本地的存放路径
+#图片下载需要pypi图片下载库:pip install pillow
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See http://doc.scrapy.org/en/latest/topics/autothrottle.html
 #AUTOTHROTTLE_ENABLED = True
