@@ -26,4 +26,5 @@ class JobboleSpider(scrapy.Spider):
             comment_nums = match_re.group(1)
         content = response.css("div.entry").extract()[0]
         tags = response.css(".entry-meta-hide-on-mobile a::text").extract()[0]
+
         pass
