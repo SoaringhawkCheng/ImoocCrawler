@@ -69,7 +69,7 @@ ITEM_PIPELINES = {
 #    'crawler.pipelines.JsonExportPipleline': 2,
 #'scrapy.pipelines.images.ImagesPipeline':1,
 'crawler.pipelines.AritcleImagePipeline': 1,
-'crawler.pipelines.MysqlPipeline': 2
+'crawler.pipelines.MysqlTwistedPipline': 2
 }
 IMAGES_URLS_FIELD = "front_image_url"  #从item中去图片的url交给ImagesPipeline()函数处理下载图片
 project_dir = os.path.abspath(os.path.dirname(__file__))#取本地的存放路径
@@ -95,3 +95,7 @@ IMAGES_STORE = os.path.join(project_dir,'images')#设计本地的存放路径
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+MYSQL_HOST = "172.29.103.5"
+MYSQL_DBNAME = "Jobbole_db"
+MYSQL_USER = "root"
+MYSQL_PASSWORD = "cetc315B01"

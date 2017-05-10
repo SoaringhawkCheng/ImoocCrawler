@@ -23,9 +23,9 @@ class JobboleSpider(scrapy.Spider):
             image_url = post_node.css("img::attr(src)").extract_first("")
             post_url = post_node.css("::attr(href)").extract_first("")
             yield Request(url = urlparse.urljoin(response.url,post_url),meta = {"front_image_url":image_url}, callback=self.parse_detail)
-        next_urls =  response.css(".next.page-numbers::attr(href)").extract_first()
-        if next_urls:
-            yield Request(url = urlparse.urljoin(response.url,post_url),callback=self.parse)
+        next_url =  response.css(".next.page-numbers::attr(href)").extract_first()
+        if next_url:
+            yield Request(url = urlparse.urljoin(response.url,next_url),callback=self.parse)
     def parse_detail(self,response):
         #提取文章的具体字段
         article_item = JobBoleArticleItem()
