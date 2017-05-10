@@ -4,6 +4,8 @@ import re
 from scrapy.http import Request
 import urlparse
 from crawler.items import JobBoleArticleItem
+from crawler.utils.common import get_md5
+
 class JobboleSpider(scrapy.Spider):
     name = "jobbole"
     allowed_domains = ["blog.jobbole.com"]
@@ -44,6 +46,7 @@ class JobboleSpider(scrapy.Spider):
             comment_nums = 0
         content = response.css("div.entry").extract()[0]
         tags = response.css(".entry-meta-hide-on-mobile a::text").extract()[0]
+        article_item["url_object_id"] = get_md5(response.url)
         article_item["title"] = titlestr
         article_item["url"]   = response.url
         article_item["create_date"] = create_date

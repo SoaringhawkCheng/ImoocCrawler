@@ -67,7 +67,8 @@ ROBOTSTXT_OBEY = False
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
    'crawler.pipelines.CrawlerPipeline': 300,
-    'scrapy.pipelines.images.ImagesPipeline':1
+   # 'scrapy.pipelines.images.ImagesPipeline':1
+'crawler.pipelines.AritcleImagePipeline': 1
 }
 IMAGES_URLS_FIELD = "front_image_url"  #从item中去图片的url交给ImagesPipeline()函数处理下载图片
 project_dir = os.path.abspath(os.path.dirname(__file__))#取本地的存放路径
