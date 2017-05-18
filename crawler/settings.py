@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
-
+import sys
 # Scrapy settings for crawler project
 #
 # For simplicity, this file contains only settings considered important or
@@ -75,6 +75,13 @@ IMAGES_URLS_FIELD = "front_image_url"  #从item中去图片的url交给ImagesPip
 project_dir = os.path.abspath(os.path.dirname(__file__))#取本地的存放路径
 IMAGES_STORE = os.path.join(project_dir,'images')#设计本地的存放路径
 #图片下载需要pypi图片下载库:pip install pillow
+
+
+
+###设置IMOOCCRAWLER的主路径
+BASE_DIR = os.path.dirname(os.path.abspath(os.path.dirname(__file__)))
+print BASE_DIR
+sys.path.insert(0, BASE_DIR)
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See http://doc.scrapy.org/en/latest/topics/autothrottle.html
 #AUTOTHROTTLE_ENABLED = True

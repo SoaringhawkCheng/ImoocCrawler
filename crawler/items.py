@@ -81,3 +81,26 @@ class JobBoleArticleItem(scrapy.Item):
 class ArticleItemLoader(ItemLoader):
     default_output_processor = TakeFirst()
 
+
+class LagouJobItemLoader(ItemLoader):
+    #自定义itemloader
+    default_output_processor = TakeFirst()
+
+
+class LagouJobItem(scrapy.Item):
+    #拉勾网职位信息
+    title = scrapy.Field()
+    url = scrapy.Field()
+    url_object_id = scrapy.Field()
+    salary = scrapy.Field()
+    job_city = scrapy.Field()
+    work_years = scrapy.Field()
+    degree_nedd = scrapy.Field()
+    job_type = scrapy.Field()
+    publish_time = scrapy.Field()
+    job_advantage = scrapy.Field()
+    job_desc = scrapy.Field()
+    job_addr = scrapy.Field()
+    company_name = scrapy.Field()
+    conpany_url = scrapy.Field()
+    tags = scrapy.Field()
