@@ -9,6 +9,8 @@ import scrapy
 from scrapy.loader.processors import MapCompose,TakeFirst,Join
 from scrapy.loader import ItemLoader
 import re
+from w3lib.html import remove_tags
+from settings import SQL_DATETIME_FORMAT,SQL_DATE_FORMAT
 
 
 class CrawlerItem(scrapy.Item):
@@ -82,25 +84,60 @@ class ArticleItemLoader(ItemLoader):
     default_output_processor = TakeFirst()
 
 
+def remove_splash(value):
+    #去掉城市的斜线
+    return value.replace("/","")
+
+
+# def handle_jobaddr(value):
+#     addr_list = value.split("\\n")
+#     addr_list = [item.strip() for item in addr_list if item.strip() != u'查看地图']
+#     return "".join(addr_list)
+
+
 class LagouJobItemLoader(ItemLoader):
-    #自定义itemloader
     default_output_processor = TakeFirst()
 
 
 class LagouJobItem(scrapy.Item):
-    #拉勾网职位信息
     title = scrapy.Field()
     url = scrapy.Field()
     url_object_id = scrapy.Field()
     salary = scrapy.Field()
-    job_city = scrapy.Field()
-    work_years = scrapy.Field()
-    degree_nedd = scrapy.Field()
+    job_city = scrapy.Field(
+        input_processor = MapCompose(remove_splash),
+    )
+    work_years = scrapy.Field(
+        input_processor = MapCompose(remove_splash),
+    )
+    degree_need = scrapy.Field(
+        input_processor = MapCompose(remove_splash),
+    )
     job_type = scrapy.Field()
     publish_time = scrapy.Field()
     job_advantage = scrapy.Field()
     job_desc = scrapy.Field()
-    job_addr = scrapy.Field()
+    job_addr = scrapy.Field(
+        input_processor=MapCompose(remove_tags)
+    )
     company_name = scrapy.Field()
-    conpany_url = scrapy.Field()
-    tags = scrapy.Field()
+    company_url = scrapy.Field()
+    tags = scrapy.Field(
+        input_processor = Join(",")
+    )
+    crawl_time = scrapy.Field()
+
+    def get_insert_sql(self):
+        insert_sql = """
+            INSERT INTO lagou_job(url, url_object_id, salary, job_city, work_years, degree_need, job_type, publish_time, tags, job_advantage, job_desc, company_url, company_name, crawl_time )
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+          
+        """
+        params = (
+            self["url"], self["url_object_id"], self["salary"],
+            self["job_city"], self["work_years"], self["degree_need"],
+            self["job_type"], self["publish_time"], self["tags"],
+            self["job_advantage"],  self["job_desc"], self["company_url"],
+            self["company_name"], self["crawl_time"].strftime(SQL_DATETIME_FORMAT),
+        )
+        return insert_sql, params
