@@ -68,8 +68,8 @@ ROBOTSTXT_OBEY = False
 ITEM_PIPELINES = {
 #    'crawler.pipelines.JsonExportPipleline': 2,
 #'scrapy.pipelines.images.ImagesPipeline':1,
-'crawler.pipelines.AritcleImagePipeline': 1,
-'crawler.pipelines.MysqlTwistedPipline': 2
+#'crawler.pipelines.AritcleImagePipeline': 1,
+'crawler.pipelines.MysqlTwistedPipline': 1
 }
 IMAGES_URLS_FIELD = "front_image_url"  #从item中去图片的url交给ImagesPipeline()函数处理下载图片
 project_dir = os.path.abspath(os.path.dirname(__file__))#取本地的存放路径
@@ -80,8 +80,8 @@ IMAGES_STORE = os.path.join(project_dir,'images')#设计本地的存放路径
 
 ###设置IMOOCCRAWLER的主路径
 BASE_DIR = os.path.dirname(os.path.abspath(os.path.dirname(__file__)))
-print BASE_DIR
-sys.path.insert(0, BASE_DIR)
+print BASE_DIR+"\\crawler"
+sys.path.insert(0, BASE_DIR+"\\crawler")
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See http://doc.scrapy.org/en/latest/topics/autothrottle.html
 #AUTOTHROTTLE_ENABLED = True
@@ -102,7 +102,10 @@ sys.path.insert(0, BASE_DIR)
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
-MYSQL_HOST = "172.29.103.5"
-MYSQL_DBNAME = "Jobbole_db"
+MYSQL_HOST = "172.29.103.149"
+MYSQL_DBNAME = "Crawler_db"
 MYSQL_USER = "root"
-MYSQL_PASSWORD = "cetc315B01"
+MYSQL_PASSWORD = "cetc315"
+
+SQL_DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S"
+SQL_DATE_FORMAT = "%Y-%m-%d"
